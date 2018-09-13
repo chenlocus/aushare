@@ -5,10 +5,14 @@ Created on 2018/9/10
 '''
 import unittest
 import aushare.stock.fundamental as fd
+import sys
+from datetime import datetime
 
 class TestFundamental(unittest.TestCase):
 
     def setUp(self):
+        if sys.version_info[0] < 3:
+            raise Exception("Must be using Python 3")
         self.thisyear = datetime.now().year
        
     def tearDown(self):
@@ -34,14 +38,25 @@ class TestFundamental(unittest.TestCase):
     def test_getWeeklyPrice(self):
         for code in ['APT','123']:
             print(code)
-            print(fd.getWeeklyPrice(code))
-            print (fd.getWeeklyPrice(code,self.thisyear+2))
+            print(fd.getWeeklyPrice(code=code,Year=self.thisyear))
+            print (fd.getWeeklyPrice(code=code,Year=self.thisyear+2))
     
-    def getMeanPriceDiffPercentage(self):
+    def test_getMeanPriceDiffPercentage(self):
         code = ['APT','123']
         startyear = [self.thisyear, self.thisyear+1]
         for code, startyear in zip(code,startyear):
-            print(fd.getMeanPriceDiffPercentage())           
+            print(fd.getMeanPriceDiffPercentage(code,self.startyear),startyear+1)      
+
+    def test_getBalanceSheet(self):
+        for code in ['APT','123']:
+            print(code)
+            print(fd.getBalanceSheet(code))
+
+    def test_getCashflow(self):
+        for code in ['APT','123']:
+            print(code)
+            print(fd.getCashflow(code))
+
 
         
 if __name__ == "__main__":

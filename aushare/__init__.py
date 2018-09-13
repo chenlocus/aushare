@@ -10,4 +10,4 @@ for ASX financial data
 """
 from aushare.stock.fundamental import (getAllASXListCode,getASXListName,getASXListIndustry,
 	                                   getCompanyBasicInfo,getRevenueDiff,getWeeklyPrice,
-	                                   getMeanPriceDiffPercentage)
+	                                   getMeanPriceDiffPercentage,getBalanceSheet,getCashflow)

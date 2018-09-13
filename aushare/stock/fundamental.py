@@ -121,7 +121,7 @@ def getWeeklyPrice(code='APT',Year='2016'):
         df1 = pd.read_html(str(tb),header=0,index_col=0,na_values=na_values)
         return df1[0]
     except:
-        print('No weekly price found for the code %s in year %s'%code,Year)
+        print('No weekly price found for the code ')
         return None
 
     
@@ -140,4 +140,46 @@ def getMeanPriceDiffPercentage(code,startYear,endYear):
     meanprice_year2 = df2['Close*'].mean()
     print(meanprice_year2)
     return 0 if meanprice_year1==0 else round(meanprice_year2-meanprice_year1,4)*100/meanprice_year1
+
+#get balance sheet from annual report in yahoo finance
+
+def getBalanceSheet(code='APT'):
+    
+    try:
+        urlbase = ct.BALANCE_SHEET_ANNUAL_REPORT
+        url = urlbase%(code,code)
+        print(url)
+        response = urllib.request.urlopen(url).read().decode('utf-8')
+        soup = BeautifulSoup(response, "lxml")
+        tb = soup.find("table")
+        df1 = pd.read_html(str(tb),header=0,index_col=0)
+        df =df1[0].T
+        # df2 = pd.to_numeric(df["Total Revenue"],downcast='float')
+    
+        # df3 = pd.DataFrame(data=df2.pct_change(periods=-1)).reset_index()
+        # df3.columns=['date','difference']
+    except:
+        print('No balance sheet  found for the code %s'%code)
+        df =None
+    
+    return df
+
+#get cash flow from annual report in yahoo finance
+def getCashflow(code='APT'):    
+    try:
+        urlbase = ct.CASH_FLOW_ANNUAL_REPORT
+        url = urlbase%(code,code)
+        print(url)
+        response = urllib.request.urlopen(url).read().decode('utf-8')
+        soup = BeautifulSoup(response, "lxml")
+        tb = soup.find("table")
+        df1 = pd.read_html(str(tb),header=0,index_col=0)
+        df =df1[0].T
+    except:
+        print('No cash flow  found for the code %s'%code)
+        df =None
+    
+    return df
+
+
 
