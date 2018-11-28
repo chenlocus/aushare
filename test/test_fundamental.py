@@ -45,7 +45,7 @@ class TestFundamental(unittest.TestCase):
         code = ['APT','123']
         startyear = [self.thisyear, self.thisyear+1]
         for code, startyear in zip(code,startyear):
-            print(fd.getMeanPriceDiffPercentage(code,self.startyear),startyear+1)      
+            print(fd.getMeanPriceDiffPercentage(code,startyear,startyear+1))   
 
     def test_getBalanceSheet(self):
         for code in ['APT','123']:
